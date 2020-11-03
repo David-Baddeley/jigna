@@ -30,7 +30,7 @@ class VueTemplate(Template):
               var vm = undefined;
               // jigna.models are ready only when the deferred returned by initialize
               // is resolved. One could also use jigna.ready.done.
-              jigna.initialize({{async: {async}}}).done(function() {{
+              jigna.initialize({{_async: {_async}}}).done(function() {{
                   vm = new Vue({{
                       el: 'body',
                       data: jigna.models,

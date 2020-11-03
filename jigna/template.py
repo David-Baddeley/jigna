@@ -30,7 +30,7 @@ class Template(HasTraits):
     #: start an async client is specified at the Javascript level instead of
     #: here, using the Javascript statement: `jigna.initialize({async: true})`.
     #: In that case, the value of this trait becomes moot.
-    async = Bool(False)
+    _async = Bool(False)
 
     #: The base url for all resources (relative urls are resolved corresponding
     #: to the current working directory).
@@ -76,11 +76,11 @@ class Template(HasTraits):
 
         # ...otherwise, create the template out of body and head htmls
         else:
-            async = 'true' if self.async else 'false'
+            _async = 'true' if self._async else 'false'
             html = self.html_template.format(
                 body_html = self.body_html,
                 head_html = self.head_html,
-                async     = async,
+                _async     = _async,
             )
 
         return html
@@ -94,7 +94,7 @@ class Template(HasTraits):
           <head>
             <script type="text/javascript" src="/jigna/jigna.js"></script>
             <script type="text/javascript">
-                jigna.initialize({{async: {async}}});
+                jigna.initialize({{_async: {_async}}});
             </script>
 
             {head_html}

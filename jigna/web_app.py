@@ -22,14 +22,14 @@ class WebApp(web.Application):
 
     def __init__(self, handlers=None, default_host="", transforms=None,
                  context=None, template=None, trait_change_dispatch="same",
-                 async=False, **kw):
+                 _async=False, **kw):
 
         if template is not None:
-            template.async = async
+            template._async = _async
         self.context = context
         self.template = template
         self.trait_change_dispatch = trait_change_dispatch
-        self.async = async
+        self._async = _async
 
         if handlers is None:
             handlers = []
@@ -46,7 +46,7 @@ class WebApp(web.Application):
         """
 
         # Set up the WebServer to serve the domain models in context
-        klass = AsyncWebServer if self.async else WebServer
+        klass = AsyncWebServer if self._async else WebServer
         server = klass(
             base_url              = join(os.getcwd(), self.template.base_url),
             html                  = self.template.html,
